@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<head>
+    <title>Davagh Form</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&family=Roboto:wght@300&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Noto+Sans:wght@300&family=PT+Serif&family=Poppins:wght@500&family=Roboto:wght@300&display=swap');
+
+        /* Sets font, sets box-sizing and removes padding/margins */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        .header {
+            font-family: 'Poppins', sans-serif;
+            width: 100%;
+            text-align: left;
+            grid-area: hd;
+            background-color: rgb(94, 160, 122);
+            color: white;
+            padding: 20px;
+        }
+        body {
+            background-image: url(images/forest.jpg);
+            background-repeat: no-repeat;
+            background-size: cover;
+            font-size: 20px;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        /* CSS for Top column, the main page and all buttons on the website (as well as a button ID for eg3)*/
+        .wrapper {
+            display: grid;
+            grid-template-columns: 50% 50%;
+            grid-gap: 20px;
+            grid-template-areas:
+            "hd hd"
+            "ct ct"
+            "mp mp"
+        }
+        .col_top {
+            font-family: 'PT Serif', serif;
+            width: 50.3333%;
+            margin-left: 24.8%;
+            grid-area: ct;
+            padding: 15px;
+            color: gray;
+            background-color: white;
+        }
+        .main_page {
+            font-family: 'PT Serif', serif;
+            width: 50.3333%;
+            margin-left: 24.8%;
+            grid-area: mp;
+            padding: 15px;
+            color: gray;
+            background-color: white;
+        }
+        button {
+            font-family: 'Noto Sans', sans-serif;
+            background-color: rgb(70, 119, 89);
+            color: white;
+            padding: 12px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            }
+        #button {
+            font-family: 'Noto Sans', sans-serif;
+            background-color: rgb(70, 119, 89);
+            color: white;
+            padding: 12px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+
+<body>
+    
+    <div class="wrapper">
+        <div class="header" id="test">
+            <!-- main title of web-page -->
+            <br>
+            <h1 style="font-size: 30px;">Ewan's <del>Davagh Forest</del> <u>JS</u> Guide</h1>
+            <br>
+
+        </div>
+        <!-- subtitle -->
+        <div class="col_top" id="eg1">
+            <br>
+            <h2>3 Examples using Java Script</h2>
+            <br>
+        </div>
+
+        <div class="main_page">
+
+            <!-- example 1 -->
+            <p><b>Example 1: Opacity Slider</b></p>
+            <input type="range" min="20" max="100" value="100" onmousemove="eg1(this.value)">
+            <span id="eg1_opacity">0</span>
+            <br><br>
+
+            <!-- example 2 -->
+            <p><b>Example 2: Press the Button</b></p><br>
+            <button id="button2">Reveal message</button>
+            <span id="eg2"></span>
+            <br><br>
+
+            <!-- example 3 -->
+            <p><b>Example 3: Press the Button</b></p><br>
+            <input id="button" type="button" value="Colour" onclick="eg3_color();">
+            <input id="button" type="button" value="Undo" onclick="eg3_undo();">
+            <br><br>
+        </div>
+    </div>
+
+    <script>
+
+        // example 1, opacity slider
+        // checks the value of the slider, and changes the opacity of the <body> based on it
+        window.opac = 1;
+        function eg1(value) {
+            window.opac = value;
+            change_opacity();
+        }
+        function change_opacity() {
+            document.getElementById("eg1_opacity").innerHTML = window.opac;
+            document.body.style.opacity = window.opac /100;
+        }
+        
+        // example 2, display secret message
+        // Uses an event listener to check when button is clicked, and then displays a message and sets it to blue
+        document.getElementById('button2').addEventListener('click', function() {
+            document.getElementById('eg2').innerHTML = "Secret Message";
+            document.getElementById('eg2').style.color = "blue";
+            });
+
+        // example 3, change colour of all <p> using NodeLists
+        //basic for loop to go add all <p> instances to the NodeList, and changes there colour
+        function eg3_color() {
+            const NodeList = document.querySelectorAll("p")
+            for (let x = 0; x < NodeList.length; x++) {
+                var temp = NodeList[x].style;
+                temp.color = "red";
+            }
+        }
+        function eg3_undo() {
+            const NodeList = document.querySelectorAll("p")
+            for (let x = 0; x < NodeList.length; x++) {
+                var temp = NodeList[x].style;
+                temp.color = "gray";
+            }
+        }
+    </script>
+</body>

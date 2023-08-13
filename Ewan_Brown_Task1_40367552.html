@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Ewan's Davagh Forest Guide</title>
+    <style>
+        /* imports all fonts used */
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&family=Roboto:wght@300&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Poppins:wght@500&family=Roboto:wght@300&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Noto+Sans:wght@300&family=PT+Serif&family=Poppins:wght@500&family=Roboto:wght@300&display=swap');
+
+        /* Sets font, sets box-sizing and removes padding/margins for the body and header*/
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background-image: url(images/forest.jpg);
+            background-repeat: no-repeat;
+            background-size: cover;
+            font-size: 20px;
+            font-family: 'Roboto', sans-serif;
+        }
+        .header {
+            font-family: 'Poppins', sans-serif;
+            width: 100%;
+            text-align: left;
+            grid-area: hd;
+            background-color: rgb(94, 160, 122);
+            color: white;
+            padding: 20px;
+        }
+
+        /* CSS for Each column, main form, and footer */
+        .col_top {
+            font-family: 'PT Serif', serif;
+            width: 50.3333%;
+            margin-left: 24.8%;
+            grid-area: ct;
+            padding: 15px;
+            color: gray;
+            background-color: white;
+        }
+        .form {
+            font-family: 'PT Serif', serif;
+            width: 50.3333%;
+            margin-left: 24.8%;
+            grid-area: fm;
+            padding: 15px;
+            color: gray;
+            background-color: white;
+        }
+        .footer {
+            font-family: 'Libre Baskerville', serif;
+            text-align: center;
+            margin-left: 25%;
+            width: 50%;
+            grid-area: ft;
+            color: white;
+        }
+
+        /* Sets standard template for web-page */
+        .wrapper {
+            display: grid;
+            grid-template-columns: 50% 50%;
+            grid-gap: 20px;
+            grid-template-areas:
+                "hd hd"
+                "ct ct"
+                "fm fm"
+                "ft ft"
+        }
+
+        /* Changes template if resolution drops below 1k */
+        @media screen and (max-width: 1000px) {
+            .wrapper {
+                grid-template-columns: 100%;
+                grid-template-areas:
+                    "hd"
+                    "ct"
+                    "fm"
+                    "ft";
+            }
+
+            .header {
+                width: 105%;
+            }
+        }
+
+        /* Sets image size relative to browser resolution */
+        img {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* CSS for dropdown Table */
+        .drop_data {
+            font-family: 'Noto Sans', sans-serif;
+            background-color: rgb(70, 119, 89);
+            color: white;
+            padding: 16px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+        }
+        .dropdown_menu {
+            position: relative;
+            display: inline-block;
+        }
+        .dropdown_menu-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            right: 0;
+        }
+        .dropdown_menu-content a:hover {
+            background-color: #f1f1f1
+        }
+        .dropdown_menu-content a {
+            color: black;
+            padding: 11px 15px;
+            text-decoration: none;
+            display: block;
+        }
+        .dropdown_menu:hover .drop_data {
+            background-color: rgb(45, 94, 64);
+        }
+        .dropdown_menu:hover .dropdown_menu-content {
+            display: block;
+        }
+
+        /* CSS for buttons */
+        button {
+            font-family: 'Noto Sans', sans-serif;
+            background-color: rgb(70, 119, 89);
+            color: white;
+            padding: 16px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            }
+        .submit {
+            font-family: 'Noto Sans', sans-serif;
+            background-color: rgb(70, 119, 89);
+            color: white;
+            padding: 16px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+        }
+
+        /* CSS for Error text */
+        .error {
+            color: red;
+        }
+    </style>
+
+    <script>
+        // validation function
+        function validate() {
+
+            // Declaring all variables
+            var name_temp = document.getElementById("name_temp");
+            var email = document.getElementById("email");
+            var password = document.getElementById("password");
+            var confirm_password = document.getElementById("confirm_password");
+            var dob = document.getElementById("dob");
+            var gender = document.getElementById("gender");
+            var sub_length = document.getElementById("sub_length");
+
+            // Name verification (Presence Check)
+            if (name_temp.value == ""){
+                document.getElementById("name_error").innerHTML=" Please Enter A Name";
+                return false;
+            }
+            else{
+                document.getElementById("name_error").innerHTML="";
+            }
+
+            // Email verification (Presence Check and Format check)
+            if (email.value == ""){
+                document.getElementById("email_error").innerHTML=" Please Enter An Email";
+                return false;
+            }
+            else if(email.value.includes("@") == false) {
+                document.getElementById("email_error").innerHTML=" symbol";
+                return false;
+            }
+            else{
+                document.getElementById("email_error").innerHTML="";
+            }
+
+            // Password verification (Presence Check and Length check)
+            if (password.value == ""){
+                document.getElementById("password_error").innerHTML=" Please Enter A Password";
+                return false;
+            }
+            else if (password.value.length < 8){
+                document.getElementById("password_error").innerHTML=" Please Enter A Password with 8 or more characters";
+                return false;
+            }
+            else{
+                document.getElementById("password_error").innerHTML="";
+            }
+
+            // Confirm password verification (Presence Check and Checking if its the same as Password)
+            if (confirm_password.value == ""){
+                document.getElementById("confirm_error").innerHTML=" Please Enter A Password Confirmation";
+                return false;
+            }
+            else if (confirm_password.value !== password.value){
+                document.getElementById("confirm_error").innerHTML=" This must be the same is the Password";
+                return false;
+            }
+            else{
+                document.getElementById("confirm_error").innerHTML="";
+            }
+
+            // Date of Birth verification (Presence Check)
+            if (dob.value == ""){
+                document.getElementById("dob_error").innerHTML=" Please select a Date of Birth";
+                return false;
+            }
+            else{
+                document.getElementById("dob_error").innerHTML="";
+            }
+
+            // Gender verification (Presence Check)
+            if (gender.value == "Select"){
+                document.getElementById("gender_error").innerHTML=" Please select a gender from the list";
+                return false;
+            }
+            else{
+                document.getElementById("gender_error").innerHTML="";
+            }
+
+            // Subscription verification (Range check)
+            if (sub_length.value < 1) {
+                document.getElementById("sub_error").innerHTML=" Subscription length cannot be 0";
+                return false;
+            }
+            else {
+                document.getElementById("sub_error").innerHTML="";
+            }
+        }
+    </script>
+
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="header">
+            <!-- dropdown menu -->
+            <div class="dropdown_menu" style="position:absolute; left:95%;">
+                <button class="drop_data">Contact</button>
+                <div class="dropdown_menu-content">
+                    <a href="https://en-gb.facebook.com/" target="_blank">Facebook</a>
+                    <a href="https://twitter.com/?lang=en" target="_blank">Twitter</a>
+                    <a href="https://www.instagram.com/" target="_blank">Instragram</a>
+                    <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank">Youtube</a>
+                </div>
+            </div>
+            <br>
+
+            <!-- main title of web-page -->
+            <h1 style="font-size: 30px;">Ewan's Davagh Forest Guide</h1>
+            <br>
+
+        </div>
+        <!-- subtitle -->
+        <div class="col_top">
+            <br>
+            <h2>Davagh Plus Sign-up form</h2>
+            <br>
+        </div>
+
+        <div class="form">
+
+            <center>
+                <p>- This subscription will allow you full access to all biking trails, carparks and walking routes in the forest -</p><br>
+            </center>
+
+            <!-- Setting up the form element and the mailto feature -->
+            <form oninput="x.value=parseInt(a.value)" onsubmit = "return validate()" action = "mailto:40367552@student.ac.uk" method = "post">
+
+                <!-- Name -->
+                <label for="name_temp">Name:</label>
+                <input type="text" id="name_temp" name="name_temp"><span class="error" id="name_error"></span><br><br>
+
+                <!-- Email -->
+                <label for="email">Email:</label>
+                <input type="text" id="email" name="email"><span class="error" id="email_error"></span><br><br>
+
+                <!-- Password -->
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password"><span class="error" id="password_error"></span><br><br>
+
+                <!-- Password Confirmation -->
+                <label for="confirm_password">Confirm Password:</label>
+                <input type="password" id="confirm_password" name="confirm_password"><span class="error" id="confirm_error"></span><br><br>
+
+                <!-- Date of Birth -->
+                <label for="dob">Date of Birth:</label>
+                <input type="date" id="dob" name="dob"><span class="error" id="dob_error"></span><br><br>
+
+                <!-- Gender Selection Menu -->
+                <label for="gender">Gender:</label>
+
+                <select id="gender" name="gender">
+                    <option value="Select">-Select a Gender-</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                </select><span class="error" id="gender_error"></span><br><br>
+
+                <!-- Subscription Slider -->
+                Subscription length (Weeks): 
+                0
+                <input type="range" id="a" name="a" value="52">
+                100
+                ->
+                <output id="sub_length" name="x"></output>
+                <span class="error" id="sub_error"></span>
+                <br><br>
+                <p>Please select one of the following payment methods: (Note this is optional at this stage)</p>
+
+                <!-- Radio buttons for payment -->
+                <input type="radio" id="card" name="payment" value="card">
+                <label for="card">Card or bank transfer</label><br>
+                <input type="radio" id="paypal" name="payment" value="paypal">
+                <label for="paypal">Paypal</label><br>
+                <input type="radio" id="cash" name="payment" value="cash">
+                <label for="cash">Cash/Cheque</label><br><br><span class="error" id="payment_error"></span>
+
+                <!-- Submit button -->
+                <center>
+                    <input class="submit" type="submit" id="submit" value="Submit Form">
+                    <br><br><br>
+                    <p>- Note submitting will open your default email application -</p>
+                </center>
+                <br>
+                <br>
+              </form>
+        </div>
+
+        <!-- footer -->
+        <div class="footer">
+            <br>
+            <p>Website designed by Ewan Brown</p>
+            <br>
+            <span id="output"></span>
+        </div>
+    </div>
+    
+</body>
+</html>
